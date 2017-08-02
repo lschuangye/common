@@ -3,5 +3,5 @@
  * 公用js库
  */
 function ajax(){
-    
+
 }

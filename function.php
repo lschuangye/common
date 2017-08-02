@@ -8,6 +8,26 @@
  */
 
 
+
+if(!function_exists('sel_table_next_id')){
+    /**
+     * @param $table
+     * @return bool
+     * 查询某一个表的下一条增加数据的主键值
+     */
+    function sel_table_next_id($table){
+        $sql = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES    
+          WHERE TABLE_NAME='$table' ";
+        $info = M()->query($sql);
+        if($info){
+            return $info[0]['auto_increment'];
+        }else{
+            return false;
+        }
+    }
+}
+
+
 if(!function_exists('remove_arraych')){
     /**
      * @param $array
@@ -235,7 +255,7 @@ if(!function_exists('is_upload_file')){
 }
 
 
-if(!function_exists('towNumber')){
+if(!function_exists('two_number')){
     /**
      * @param $val
      * @return string
