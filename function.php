@@ -7,6 +7,15 @@
  * 公共函数库
  */
 
+if(!function_exists('dump_r')){
+    /**
+     * @param $data
+     * 打印
+     */
+  function dump_r($data){
+        echo "<pre>".print_r($data,true);die;
+    }
+}
 
 
 if(!function_exists('sel_table_next_id')){
