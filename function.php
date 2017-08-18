@@ -6,6 +6,16 @@
  * Time: 9:40
  * 公共函数库
  */
+if(!function_exists('file_log')){
+    /**
+     * @param $path
+     * @param $content
+     * 文件日志
+     */
+    function file_log($path,$content){
+        file_put_contents($path,$content,FILE_APPEND);
+    }
+}
 
 if(!function_exists('dump_r')){
     /**
