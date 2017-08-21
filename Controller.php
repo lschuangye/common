@@ -1,6 +1,7 @@
 <?php
  /*****
   * 公共父类
+  * yangzc
   */
  class Controller{
 
