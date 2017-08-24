@@ -231,24 +231,7 @@
      function get_os(){
          $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
          $os = 'other';
-
-         if (preg_match('/win/i', $agent) && strpos($agent, '95'))
-         {
-             $os = 'Windows 95';
-         }
-         else if (preg_match('/win 9x/i', $agent) && strpos($agent, '4.90'))
-         {
-             $os = 'Windows ME';
-         }
-         else if (preg_match('/win/i', $agent) && preg_match('/98/i', $agent))
-         {
-             $os = 'Windows 98';
-         }
-         else if (preg_match('/win/i', $agent) && preg_match('/nt 6.0/i', $agent))
-         {
-             $os = 'Windows Vista';
-         }
-         else if (preg_match('/win/i', $agent) && preg_match('/nt 6.1/i', $agent))
+         if (preg_match('/win/i', $agent) && preg_match('/nt 6.1/i', $agent))
          {
              $os = 'Windows 7';
          }
@@ -262,18 +245,6 @@
          {
              $os = 'Windows XP';
          }
-         else if (preg_match('/win/i', $agent) && preg_match('/nt 5/i', $agent))
-         {
-             $os = 'Windows 2000';
-         }
-         else if (preg_match('/win/i', $agent) && preg_match('/nt/i', $agent))
-         {
-             $os = 'Windows NT';
-         }
-         else if (preg_match('/win/i', $agent) && preg_match('/32/i', $agent))
-         {
-             $os = 'Windows 32';
-         }
          else if (preg_match('/linux/i', $agent))
          {
              $os = 'Linux';
@@ -282,10 +253,7 @@
          {
              $os = 'Unix';
          }
-         else if (preg_match('/mac/i', $agent) && preg_match('/PC/i', $agent))
-         {
-             $os = 'Macintosh';
-         }else if(strpos($agent, 'iphone') || strpos($agent, 'ipad')){
+         else if(strpos($agent, 'iphone') || strpos($agent, 'ipad')){
              $os = 'ios';
          } else if(strpos($agent, 'android')){
              $os = 'android';
