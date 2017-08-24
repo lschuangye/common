@@ -230,7 +230,7 @@
       */
      function get_os(){
          $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
-         $os = 'other';
+
          if (preg_match('/win/i', $agent) && preg_match('/nt 6.1/i', $agent))
          {
              $os = 'Windows 7';
