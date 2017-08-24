@@ -4,10 +4,6 @@
   * yangzc
   */
  class Controller{
-
-
-
-
      /**
       * @param $multi_array
       * @param $sort_key
