@@ -59,6 +59,20 @@
          return trim($tel);
      }
 
+
+     /**
+      * @param $key
+      * @return bool|string
+      * 获取 $_REQUEST 参数
+      */
+     function getRequest($key){
+         if(isset($_REQUEST[$key])){
+             return trim($_REQUEST[$key]);
+         }else{
+             return false;
+         }
+     }
+
      /**
       * @param $code
       * @param $data
