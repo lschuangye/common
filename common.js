@@ -32,3 +32,24 @@ function ajax_post(url,data,call_function){
         }
     });
 }
+
+/**
+ * 对象转数组
+ */
+function object_to_array($obj){
+    var arr = [];
+    for(var val in $obj){
+        arr.push($obj[val]);
+    }
+    return arr;
+}
+/**
+ *数组转对象
+ */
+function array_to_object($arr){
+    var object = new Object();
+    for(var key in $arr){
+        object[key] = $arr[key];
+    }
+    return object;
+}
