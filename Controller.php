@@ -7,7 +7,7 @@
      /**
       * @param $multi_array
       * @param $sort_key
-      * @param int $sort
+      * @param int $sort SORT_ASC - 默认。按升序排列 (A-Z)。 SORT_DESC - 按降序排列 (Z-A)。
       * @return bool
       * 二维数组排序
       */
