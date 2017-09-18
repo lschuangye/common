@@ -6,6 +6,22 @@
  * Time: 9:40
  * 公共函数库
  */
+
+/**
+ * 生成UUID
+ * @param string $prefix 可以指定前缀
+ * @return string
+ */
+function create_uuid($prefix = "") {
+    $str = md5(uniqid(mt_rand(), true));
+    $uuid  = substr($str,0,8) . '_';
+    $uuid .= substr($str,8,4) . '_';
+    $uuid .= substr($str,12,4) . '_';
+    $uuid .= substr($str,16,4) . '_';
+    $uuid .= substr($str,20,12);
+    return $prefix . $uuid;
+}
+
 if(!function_exists('file_log')){
     /**
      * @param $path
@@ -188,6 +204,31 @@ if(!function_exists('get_ip')){
         return $onlineip;
     }
 
+}
+
+if(!function_exists('get_city')){
+    /**
+     * 获取 IP  地理位置
+     * 淘宝IP接口
+     * @Return: array
+     */
+    function get_city($ip = '')
+    {
+        if($ip == ''){
+            $url = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json";
+            $ip=json_decode(file_get_contents($url),true);
+            $data = $ip;
+        }else{
+            $url="http://ip.taobao.com/service/getIpInfo.php?ip=".$ip;
+            $ip=json_decode(file_get_contents($url));
+            if((string)$ip->code=='1'){
+                return false;
+            }
+            $data = (array)$ip->data;
+        }
+
+        return $data?$data['country'].$data['country_id'].$data['area'].$data['region'].$data['city'].$data['isp']:'';
+    }
 }
 
 if(!function_exists('get_http')){
