@@ -8,6 +8,23 @@
  */
 
 /**
+ * 返回本周的第一天和最后一天
+ */
+function week_begin_end(){
+    $start = date("Y-m-d H:i:s",mktime(0,0,0,date("m"),date("d")-date("w")+1,date("Y")));
+    $end = date("Y-m-d H:i:s",mktime(23,59,59,date("m"),date("d")-date("w")+7,date("Y")));
+
+    return [$start,$end];
+}
+
+
+function checkTel($tel){
+    if(!preg_match('/^1[3|4|5|7|8]\d{9}$/',trim($tel))){
+        $this->jsonReturn(201,'手机号码格式错误');
+    }
+    return trim($tel);
+}
+/**
  * 生成UUID
  * @param string $prefix 可以指定前缀
  * @return string
