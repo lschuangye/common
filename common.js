@@ -54,3 +54,52 @@ function array_to_object($arr){
     return object;
 }
 
+
+$(function(){
+
+    //加载本地图片
+    var fileList = [];
+    var imageFile = document.getElementById('imageFile');// input id
+    var changeImg = function(){
+        var image = document.getElementById('image'); //img id
+        var file = document.getElementById("imageFile").files[0];
+        fileList = file;
+        //imageData.append('imgFile1', file);
+        var reader = new FileReader();
+        reader.onload = function(){
+            image.src = this.result;
+        };
+        reader.onerror = function(){
+            alert('上传文件错误');
+        };
+        reader.readAsDataURL(file);
+    };
+    imageFile.addEventListener('change',changeImg);
+})
+
+
+/**
+ * ajax 上传文件
+ *  var formData = new FormData();
+ *  var name = $("input").val();
+ *  formData.append("file",$("#upload")[0].files[0]);
+ *  formData.append("name",name);
+ */
+function ajax_upload_file(Url,formData,func){
+    $.ajax({
+        url : Url,
+        type : 'POST',
+        data : formData,
+        // 告诉jQuery不要去处理发送的数据
+        processData : false,
+        // 告诉jQuery不要去设置Content-Type请求头
+        contentType : false,
+        beforeSend:function(){
+            console.log("正在进行，请稍候");
+        },
+        success : func,
+        error : function(responseStr) {
+            return msg('请求失败~',201);
+        }
+    });
+}
