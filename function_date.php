@@ -29,3 +29,18 @@ function week_begin_end($time = ''){
     $end = date("Y-m-d H:i:s",mktime(23,59,59,date("m",$time),date("d",$time)-date("w",$time)+7,date("Y",$time)));
     return [strtotime($start),strtotime($end)];
 }
+
+/**
+ * @param $time
+ * @return bool|mixed
+ * 根据时间戳得到星期
+ */
+function weekday($time)
+{
+    if(is_numeric($time))
+    {
+        $weekday = array('星期天','星期一','星期二','星期三','星期四','星期五','星期六');
+        return $weekday[date('w', $time)];
+    }
+    return false;
+}
