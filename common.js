@@ -2,6 +2,16 @@
  * Created by yangzc on 2017/7/28.
  * 公用js库
  */
+
+function is_number(){
+    //判断是否是数字
+    var r = /^\+?[1-9][0-9]*$/;　　//正整数
+    if(!r.test(num)){
+        return msg('请输入正整数',201);
+    }
+}
+
+
 /**
  * 验证ajax 返回参数
  * @param $data

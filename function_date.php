@@ -1,0 +1,31 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: yangzc
+ * Date: 2017/12/19
+ * Time: 10:51
+ * 公用日期函数
+ */
+
+
+/**
+ * @return array
+ * 返回当月第一天和最后一天
+ */
+function month_begin_end(){
+    $begin =date('Y-m-01', strtotime(date("Y-m-d")));
+    $end = date('Y-m-d', strtotime("$begin +1 month -1 day"));
+
+    return [strtotime($begin),strtotime($end)];
+}
+/**
+ * 返回传入时间戳 当周的第一天和最后一天
+ */
+function week_begin_end($time = ''){
+    if(!$time){
+        $time = time();
+    }
+    $start = date("Y-m-d H:i:s",mktime(0,0,0,date("m",$time),date("d",$time)-date("w",$time)+1,date("Y",$time)));
+    $end = date("Y-m-d H:i:s",mktime(23,59,59,date("m",$time),date("d",$time)-date("w",$time)+7,date("Y",$time)));
+    return [strtotime($start),strtotime($end)];
+}

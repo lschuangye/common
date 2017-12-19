@@ -7,15 +7,7 @@
  * 公共函数库
  */
 
-/**
- * 返回本周的第一天和最后一天
- */
-function week_begin_end(){
-    $start = date("Y-m-d H:i:s",mktime(0,0,0,date("m"),date("d")-date("w")+1,date("Y")));
-    $end = date("Y-m-d H:i:s",mktime(23,59,59,date("m"),date("d")-date("w")+7,date("Y")));
 
-    return [$start,$end];
-}
 
 
 function checkTel($tel){
@@ -61,47 +53,10 @@ if(!function_exists('dump_r')){
 }
 
 
-if(!function_exists('sel_table_next_id')){
-    /**
-     * @param $table
-     * @return bool
-     * 查询某一个表的下一条增加数据的主键值
-     */
-    function sel_table_next_id($table){
-        $sql = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES    
-          WHERE TABLE_NAME='$table' ";
-        $info = M()->query($sql);
-        if($info){
-            return $info[0]['auto_increment'];
-        }else{
-            return false;
-        }
-    }
-}
 
 
-if(!function_exists('remove_arraych')){
-    /**
-     * @param $array
-     * @return array
-     * 去掉二维数组重复的值
-     */
-    function remove_arraych($array,$keys){
-        $result=array();
-        foreach ($array as $key => $value) {
-            $has = false;
-            foreach($result as $val){
-                if($val[$keys]==$value[$keys]){
-                    $has = true;
-                    break;
-                }
-            }
-            if(!$has)
-                $result[]=$value;
-        }
-        return $result;
-    }
-}
+
+
 
 
 if(!function_exists('curl_return_code')){
