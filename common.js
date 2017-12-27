@@ -3,11 +3,18 @@
  * 公用js库
  */
 
-function is_number(){
+/*
+ * @param num
+ * @returns {*}
+ * 判断是否是正整数
+ */
+function is_int(num){
     //判断是否是数字
     var r = /^\+?[1-9][0-9]*$/;　　//正整数
     if(!r.test(num)){
-        return msg('请输入正整数',201);
+        return false;
+    }else{
+        return num;
     }
 }
 

@@ -9,6 +9,22 @@
 
 /**
  * @param $array
+ * @return mixed
+ * 去掉数组中的空值 一维数组
+ */
+function array_emptey($array){
+    if($array){
+        foreach ($array as $key=>$val){
+            if(!$val){
+                unset($array[$key]);
+            }
+        }
+    }
+    return $array;
+}
+
+/**
+ * @param $array
  * @param $val
  * @return mixed
  * 删除数组制定的val
@@ -44,4 +60,35 @@ if(!function_exists('remove_arraych')){
         }
         return $result;
     }
+}
+
+
+
+/**
+ * @param $data
+ * @return array
+ * 去调 二维数组的空值
+ */
+function setNullData($data){
+
+    if(is_array($data) &&count($data)>0){
+        foreach ($data as $key=>$val){
+            if(is_array($val) && count($data)>0){
+                foreach ($val as $k=>$v){
+                    if(!$v){
+                        $data[$key][$k] = '';
+                    }
+                }
+            }else{
+                if(empty($val) || $val=='null' || $val==null || !$val){
+                    $data[$key] = '';
+                    if(is_array($val)){
+                        $data[$key] =[];
+                    }
+                }
+            }
+        }
+    }
+
+    return $data;
 }

@@ -8,8 +8,26 @@
  */
 
 
+if(!function_exists('str_explode')){
+    /**
+     * @param $str
+     * @return array
+     * 自定义字符串截取
+     */
+    function str_explode($str,$at='_')
+    {
+        if (strpos($str, $at) !== false) {
+            return explode($at, $str);
+        }
+    }
+}
 
 
+/**
+ * @param $tel
+ * @return string
+ * 正则验证手机号码
+ */
 function checkTel($tel){
     if(!preg_match('/^1[3|4|5|7|8]\d{9}$/',trim($tel))){
         $this->jsonReturn(201,'手机号码格式错误');
