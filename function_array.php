@@ -69,7 +69,7 @@ if(!function_exists('remove_arraych')){
  * @return array
  * 去调 二维数组的空值
  */
-function setNullData($data){
+function del_array_null($data){
 
     if(is_array($data) &&count($data)>0){
         foreach ($data as $key=>$val){
@@ -96,7 +96,7 @@ function setNullData($data){
 /*
  * XML文件转换为数组
  */
-function xmlToArray($xml)
+function xml_to_array($xml)
 {
     //禁止引用外部xml实体
     libxml_disable_entity_loader(true);
