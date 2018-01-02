@@ -3,6 +3,22 @@
  * 公用js库
  */
 
+/**
+ * Created by yangzc
+ * 获取 name值相同的 input 的值 返回 arr
+ * @param $name
+ * @returns {Array}
+ */
+function eq_input_val($name){
+    var obj = $("input[name="+$name+"]");
+    var arr =[];
+    for(var i=0;i<obj.length;i++){
+        var value = $(obj[i]).val();
+        arr.push(value);
+    }
+    return arr;
+}
+
 /*
  * @param num
  * @returns {*}
