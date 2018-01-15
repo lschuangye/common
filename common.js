@@ -136,3 +136,30 @@ function ajax_upload_file(Url,formData,func){
         }
     });
 }
+
+/**
+ * ajax 上传文件
+ *  var formData = new FormData();
+ *  var name = $("input").val();
+ *  formData.append("file",$("#upload")[0].files[0]);
+ *  formData.append("name",name);
+ *  name input 的id 和上传文件的name 值
+ */
+function ajax_upload_files(Url,name,func,load){
+    var formData = new FormData();
+    formData.append(name,$("#"+name)[0].files[0]);
+    $.ajax({
+        url : Url,
+        type : 'POST',
+        data : formData,
+        // 告诉jQuery不要去处理发送的数据
+        processData : false,
+        // 告诉jQuery不要去设置Content-Type请求头
+        contentType : false,
+        beforeSend:load,
+        success : func,
+        error : function(responseStr) {
+            return msg('请求失败~',201);
+        }
+    });
+}

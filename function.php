@@ -8,6 +8,55 @@
  */
 
 
+/**
+ * 通用正则库
+ */
+function preg_check($arr){
+    $rust = [
+        'tel'=>['patt'=>'/13[123569]{1}\d{8}|15[1235689]\d{8}|188\d{8}/','msg'=>'手机号码格式错误'],//手机号
+        'email'=>['patt'=>'/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$ /','msg'=>'邮箱格式错误'],//邮箱
+        'username'=>['patt'=>'/[a-zA-Z\d_-]{4,16}$/','msg'=>'用户名为4-16位 字母加数字加_(下划线)加减号'],//用户名
+        'password'=>['patt'=>'/^[0-9a-zA-Z_#.+*,?.;]{6,16}$/','msg'=>'密码为6-16位字母加数字加字符(_#.+*,?.;)'],//密码
+    ];
+    if(is_array($arr)){
+        foreach ($arr as $key=>$val){
+            if(in_array($rust,$key))
+            if(!preg_match($rust[$key]['patt'],$val))
+            {
+              return  jsonReturn(201,$rust[$key['msg']]);
+            }
+        }
+    }else{
+        die('not this field');
+    }
+
+
+}
+
+/**
+ * @param $code
+ * @param $data
+ * @param string $msg
+ * 200 ok  201 err
+ * 返回json格式数据
+ */
+function jsonReturn($code,$msg='',$data=[]){
+
+    if(trim($code)){
+        header('Content-Type:application/json; charset=utf-8');
+        if(empty($msg)){
+           $msg = $code==200?'操作成功':'操作失败';
+        }
+        $arr = array('errcode'=>$code,'data'=>$data,'msg'=>$msg,'time'=>time());
+        requestLog($arr);
+        exit(json_encode($arr,JSON_UNESCAPED_UNICODE));
+    }else{
+        exit('request error: not code！');
+    }
+
+}
+
+
 if(!function_exists('str_explode')){
     /**
      * @param $str
@@ -21,6 +70,8 @@ if(!function_exists('str_explode')){
         }
     }
 }
+
+
 
 
 /**
@@ -314,4 +365,76 @@ if(!function_exists('two_number')){
     function two_number($val){
         return sprintf("%.2f",$val);
     }
+}
+
+/**
+ * 请求日志
+ */
+
+function requestLog($return){
+
+    $dir = APP_PATH.'Runtime/log_api/'.MODULE_NAME.'/'.date('Y_m_d').'/';
+    if(!is_dir($dir))
+    {
+        mkdir($dir,0777,true);
+    }
+//        $request = print_r($_REQUEST,true);
+    $request = 'GET:'.print_r($_GET,true)."\nPOST:".print_r($_POST,true)."\n";
+    if($_FILES){
+        $request = "file:\n".print_r($_FILES,true)."\n\n".$request;
+    }
+    $type = $_SERVER['REQUEST_METHOD'];
+    $return = print_r($return,true);
+    $ip = get_ip();
+    //最后执行的sql语句
+    $sql = M()->getLastSql();
+
+    $con = "请求来源:".$this->get_os()."\n请求ip:".$ip."\n请求方式:".$type."\n请求参数:\n".$request."\nsql:".$sql."\n"."返回值:\n".$return."\n\n\n\n\n\n";
+    file_put_contents($dir.CONTROLLER_NAME.'_'.ACTION_NAME.'.log','请求时间:'.date('Y-m-d H:i:s',time())."\n".$con."\n",FILE_APPEND);
+}
+
+
+/**
+ * 获取客户端操作系统信息包括win10
+ * @param  null
+ * @author  Jea杨
+ * @return string
+ */
+function get_os(){
+    $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+
+    if (preg_match('/win/i', $agent) && preg_match('/nt 6.1/i', $agent))
+    {
+        $os = 'Windows 7';
+    }
+    else if (preg_match('/win/i', $agent) && preg_match('/nt 6.2/i', $agent))
+    {
+        $os = 'Windows 8';
+    }else if(preg_match('/win/i', $agent) && preg_match('/nt 10.0/i', $agent))
+    {
+        $os = 'Windows 10';#添加win10判断
+    }else if (preg_match('/win/i', $agent) && preg_match('/nt 5.1/i', $agent))
+    {
+        $os = 'Windows XP';
+    }
+    else if (preg_match('/linux/i', $agent))
+    {
+        $os = 'Linux';
+    }
+    else if (preg_match('/unix/i', $agent))
+    {
+        $os = 'Unix';
+    }
+    else if(strpos($agent, 'iphone') || strpos($agent, 'ipad')){
+        $os = 'ios';
+    } else if(strpos($agent, 'android')){
+        $os = 'android';
+    }else if(strpos($agent, 'mac')){
+        $os = '苹果mac';
+    }else{
+        $os = '未知操作系统';
+    }
+
+
+    return $os;
 }

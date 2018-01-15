@@ -73,27 +73,7 @@
          }
      }
 
-     /**
-      * @param $code
-      * @param $data
-      * @param string $msg
-      * 返回json格式数据
-      */
-     function jsonReturn($code,$msg='',$data=[]){
 
-         if(trim($code)){
-             header('Content-Type:application/json; charset=utf-8');
-             if(empty($msg)){
-                 $msg = $this->get_msg();
-             }
-             $arr = array('errcode'=>$code,'data'=>$data,'msg'=>$msg,'time'=>time());
-             $this->requestLog($arr);
-             exit(json_encode($arr,JSON_UNESCAPED_UNICODE));
-         }else{
-             exit('request error: not code！');
-         }
-
-     }
 
      /**
       * @param $param
