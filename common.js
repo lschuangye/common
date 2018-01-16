@@ -144,10 +144,14 @@ function ajax_upload_file(Url,formData,func){
  *  formData.append("file",$("#upload")[0].files[0]);
  *  formData.append("name",name);
  *  name input 的id 和上传文件的name 值
+ *  param 额外的参数 默认post   json格式 如:{a:1,b:2}
  */
-function ajax_upload_files(Url,name,func,load){
+function ajax_upload_files(Url,name,param,func,load){
     var formData = new FormData();
     formData.append(name,$("#"+name)[0].files[0]);
+    for(var k in param){
+        formData.append(k,param[k]);
+    }
     $.ajax({
         url : Url,
         type : 'POST',
@@ -156,7 +160,7 @@ function ajax_upload_files(Url,name,func,load){
         processData : false,
         // 告诉jQuery不要去设置Content-Type请求头
         contentType : false,
-        beforeSend:load,
+        beforeSend:load,//正在进行，请稍候
         success : func,
         error : function(responseStr) {
             return msg('请求失败~',201);
