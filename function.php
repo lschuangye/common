@@ -9,31 +9,6 @@
 
 
 /**
- * 通用正则库
- */
-function preg_check($arr){
-    $rust = [
-        'tel'=>['patt'=>'/13[123569]{1}\d{8}|15[1235689]\d{8}|188\d{8}/','msg'=>'手机号码格式错误'],//手机号
-        'email'=>['patt'=>'/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$ /','msg'=>'邮箱格式错误'],//邮箱
-        'username'=>['patt'=>'/[a-zA-Z\d_-]{4,16}$/','msg'=>'用户名为4-16位 字母加数字加_(下划线)加减号'],//用户名
-        'password'=>['patt'=>'/^[0-9a-zA-Z_#.+*,?.;]{6,16}$/','msg'=>'密码为6-16位字母加数字加字符(_#.+*,?.;)'],//密码
-    ];
-    if(is_array($arr)){
-        foreach ($arr as $key=>$val){
-            if(in_array($rust,$key))
-            if(!preg_match($rust[$key]['patt'],$val))
-            {
-              return  jsonReturn(201,$rust[$key['msg']]);
-            }
-        }
-    }else{
-        die('not this field');
-    }
-
-
-}
-
-/**
  * @param $code
  * @param $data
  * @param string $msg
@@ -437,4 +412,76 @@ function get_os(){
 
 
     return $os;
+}
+
+
+/**
+ * 通用正则库
+ * $arr 格式如 ['password'=>['val'=>'123456','msg'=>'密码格式错误','patt'=>'/[a-zA-Z\d_-=+.]{6,16}/']];
+ */
+function preg_check($arr){
+    $rust = [
+        'tel'=>['patt'=>'/13[123569]{1}\d{8}|15[1235689]\d{8}|188\d{8}/','msg'=>'手机号码格式错误'],//手机号
+        'email'=>['patt'=>'/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$ /','msg'=>'邮箱格式错误'],//邮箱
+        'username'=>['patt'=>'/[a-zA-Z\d_-]{4,16}$/','msg'=>'用户名为4-16位 字母加数字加_(下划线)加减号'],//用户名
+        'password'=>['patt'=>'/^[0-9a-zA-Z_#.+*,?.;]{6,16}$/','msg'=>'密码为6-16位字母加数字加字符(_#.+*,?.;)'],//密码
+    ];
+    if(is_array($arr)){
+
+        foreach ($arr as $key=>$val){
+            //判断值
+            !isset($val['val'])?jsonReturn(201,$key.' 验证参数的字段值没有val 的下标(key)'):'';
+            !$val['val']?jsonReturn(201,'$key.\' 验证参数的字段值val 不能为空'):'';
+
+            //判断正则库 这个key 是否存在
+            if(array_key_exists($key,$rust)){
+                //判断 值是否是一个数组
+                if(is_array($val)){
+                    //判断是否包含正则表达式
+                    $errmsg = isset($val['msg']) && $val['msg']?$val['msg']:$rust[$key]['msg'];
+                    if(isset($val['patt']) && $val['patt']){
+                        //包含
+                        if(!preg_match($val['patt'],$val['patt']))
+                        {
+                            return  jsonReturn(201,$errmsg);
+                        }
+                    }else{
+
+                        //不包含使用正则库的正则表达式
+                        if(!preg_match($rust[$key]['patt'],$val['val']))
+                        {
+                            return  jsonReturn(201,$errmsg);
+                        }
+                    }
+
+                }else{
+                    return jsonReturn(201,$key.' 参数字段错误,需要验证的字段对象为一个数组');
+                }
+
+
+            }else{
+                //如果正则库没有 就 判断传过来的值是否包含了正则表达时
+
+
+                if(isset($val['patt']) && $val['patt']){
+
+                    //验证msg
+                    !isset($val['msg']) || !$val['msg']?jsonReturn(201,$key.' 参数字段验证值不包含在正则库,请在字段值的数组对象中添加(msg字段)提示信息'):'';
+                    //包含
+                    if(!preg_match($val['patt'],$val['val'])){
+                        return  jsonReturn(201,$val['msg']);
+
+                    }
+                }else{
+                    return jsonReturn(201,$key.' 参数字段验证值不包含在正则库,请在字段值的数组对象中添加(patt字段)正则表达式');
+                }
+
+            }
+
+        }
+    }else{
+        return jsonReturn(201,'参数为一个数组对象');
+    }
+    return true;
+
 }
