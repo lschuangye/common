@@ -485,3 +485,18 @@ function preg_check($arr){
     return true;
 
 }
+
+/**
+ * 自定义日志
+ */
+function set_log($msg){
+
+    $dir = APP_PATH.'Runtime/log_api/'.date('Y_m_d').'/'.MODULE_NAME.'/';
+    if(!is_dir($dir))
+    {
+        mkdir($dir,0777,true);
+    }
+
+
+    file_put_contents($dir.CONTROLLER_NAME.'_'.ACTION_NAME.'.log','请求时间:'.date('Y-m-d H:i:s',time())."\n".$msg."\n",FILE_APPEND);
+}
