@@ -11,7 +11,7 @@
 /**
  * @param $filename 文件路径
  * @param $name 下载的文件名 包括后缀
- * $type 为文件类型  如 pdf  doc 等
+ * $type 为文件类型  如 pdf  doc 等 默认不加 因为 Safari 浏览器不加  Content-type 会在文件下载时默认加上 .html 后缀
  */
 function download_file($filename,$name,$type=''){
     if($type){
