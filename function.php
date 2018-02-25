@@ -498,5 +498,5 @@ function set_log($msg){
     }
 
 
-    file_put_contents($dir.CONTROLLER_NAME.'_'.ACTION_NAME.'.log','请求时间:'.date('Y-m-d H:i:s',time())."\n".$msg."\n",FILE_APPEND);
+    file_put_contents($dir.date('Y_m_d_H_i').'.log','请求时间:'.date('Y-m-d H:i:s',time())."\n".$msg."\n\n\n\n",FILE_APPEND);
 }

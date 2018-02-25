@@ -167,3 +167,4 @@ function ajax_upload_files(Url,name,param,func,load){
         }
     });
 }
+

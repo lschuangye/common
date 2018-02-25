@@ -7,13 +7,26 @@
  * 公用日期函数
  */
 
+/**
+ * @return array
+ * 返回当天的最大和最小时间戳
+ */
+function today_begin_end($time){
+    $time = $time?$time:time();
+
+    $begin =date('Y-m-d', $time);
+    $end = date('Y-m-d',$time)." 23:59:59";
+
+    return [strtotime($begin),strtotime($end)];
+}
 
 /**
  * @return array
  * 返回当月第一天和最后一天
  */
-function month_begin_end(){
-    $begin =date('Y-m-01', strtotime(date("Y-m-d")));
+function month_begin_end($time){
+    $time = $time?$time:time();
+    $begin =date('Y-m-01', strtotime(date("Y-m-d",$time)));
     $end = date('Y-m-d', strtotime("$begin +1 month -1 day"));
 
     return [strtotime($begin),strtotime($end)];
