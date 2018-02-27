@@ -35,8 +35,12 @@ function month_begin_end($time){
  * 返回传入时间戳 当周的第一天和最后一天
  */
 function week_begin_end($time = ''){
-    if(!$time){
-        $time = time();
+
+    $time = $time?$time:time();
+
+    $w =  date('w',$time);
+    if($w==0){
+        $time = $time-24*3600;
     }
     $start = date("Y-m-d H:i:s",mktime(0,0,0,date("m",$time),date("d",$time)-date("w",$time)+1,date("Y",$time)));
     $end = date("Y-m-d H:i:s",mktime(23,59,59,date("m",$time),date("d",$time)-date("w",$time)+7,date("Y",$time)));
