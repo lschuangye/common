@@ -7,7 +7,7 @@
  * Created by yangzc
  * 获取 name值相同的 input 的值 返回 arr
  * @param $name
- * @returns {Array}
+ * @returns {Array} 2018年03月08日09:53:41
  */
 function eq_input_val($name){
     var obj = $("input[name="+$name+"]");
