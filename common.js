@@ -9,6 +9,8 @@
  * @param $name
  * @returns {Array}
  */
+/*2018
+*/
 function eq_input_val($name){
     var obj = $("input[name="+$name+"]");
     var arr =[];
